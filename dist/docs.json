@@ -1,0 +1,345 @@
+{
+  "api": {
+    "name": "UploaderPlugin",
+    "slug": "uploaderplugin",
+    "docs": "",
+    "tags": [],
+    "methods": [
+      {
+        "name": "startUpload",
+        "signature": "(options: uploadOption) => Promise<{ id: string; }>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "uploadOption",
+            "type": "uploadOption"
+          }
+        ],
+        "returns": "Promise<{ id: string; }>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.0.1"
+          },
+          {
+            "name": "description",
+            "text": "Start the upload"
+          },
+          {
+            "name": "param",
+            "text": "options uploadOption"
+          },
+          {
+            "name": "returns",
+            "text": ": string }"
+          }
+        ],
+        "docs": "",
+        "complexTypes": [
+          "uploadOption"
+        ],
+        "slug": "startupload"
+      },
+      {
+        "name": "removeUpload",
+        "signature": "(options: { id: string; }) => Promise<void>",
+        "parameters": [
+          {
+            "name": "options",
+            "docs": "",
+            "type": "{ id: string; }"
+          }
+        ],
+        "returns": "Promise<void>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.0.1"
+          },
+          {
+            "name": "description",
+            "text": "Remove the upload"
+          },
+          {
+            "name": "param",
+            "text": "options"
+          },
+          {
+            "name": "returns"
+          }
+        ],
+        "docs": "",
+        "complexTypes": [],
+        "slug": "removeupload"
+      },
+      {
+        "name": "addListener",
+        "signature": "(eventName: \"events\", listenerFunc: (state: UploadEvent) => void) => Promise<PluginListenerHandle>",
+        "parameters": [
+          {
+            "name": "eventName",
+            "docs": "",
+            "type": "'events'"
+          },
+          {
+            "name": "listenerFunc",
+            "docs": "",
+            "type": "(state: UploadEvent) => void"
+          }
+        ],
+        "returns": "Promise<PluginListenerHandle>",
+        "tags": [
+          {
+            "name": "since",
+            "text": "0.0.1"
+          },
+          {
+            "name": "description",
+            "text": "Add a listener for the upload events"
+          },
+          {
+            "name": "param",
+            "text": "eventName"
+          },
+          {
+            "name": "param",
+            "text": "listenerFunc"
+          },
+          {
+            "name": "returns"
+          }
+        ],
+        "docs": "",
+        "complexTypes": [
+          "PluginListenerHandle",
+          "UploadEvent"
+        ],
+        "slug": "addlistenerevents-"
+      }
+    ],
+    "properties": []
+  },
+  "interfaces": [
+    {
+      "name": "uploadOption",
+      "slug": "uploadoption",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "filePath",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The file path of the file to upload",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "serverUrl",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The url of the server",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        },
+        {
+          "name": "notificationTitle",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "'Uploading'",
+              "name": "default"
+            },
+            {
+              "text": "The title of the notification\nAndroid only",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "headers",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The headers to send with the request",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "{ [key: string]: string; }"
+        },
+        {
+          "name": "method",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The method to use for the request",
+              "name": "description"
+            },
+            {
+              "text": "'POST'",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "'PUT' | 'POST' | undefined"
+        },
+        {
+          "name": "mimeType",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The mime type to use for the request",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string | undefined"
+        },
+        {
+          "name": "parameters",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The parameters to send with the request",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "{ [key: string]: string; } | undefined"
+        },
+        {
+          "name": "maxRetries",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The maximum number of retries",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "number | undefined"
+        }
+      ]
+    },
+    {
+      "name": "PluginListenerHandle",
+      "slug": "pluginlistenerhandle",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "remove",
+          "tags": [],
+          "docs": "",
+          "complexTypes": [],
+          "type": "() => Promise<void>"
+        }
+      ]
+    },
+    {
+      "name": "UploadEvent",
+      "slug": "uploadevent",
+      "docs": "",
+      "tags": [],
+      "methods": [],
+      "properties": [
+        {
+          "name": "name",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            }
+          ],
+          "docs": "Current status of upload, between 0 and 100.",
+          "complexTypes": [],
+          "type": "'uploading' | 'completed' | 'failed'"
+        },
+        {
+          "name": "payload",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The payload of the event",
+              "name": "description"
+            },
+            {
+              "text": "{ percent: 0, error: '', statusCode: 0 }",
+              "name": "default"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "{ percent?: number | undefined; error?: string | undefined; statusCode?: number | undefined; }"
+        },
+        {
+          "name": "id",
+          "tags": [
+            {
+              "text": "0.0.1",
+              "name": "since"
+            },
+            {
+              "text": "The id of the upload",
+              "name": "description"
+            }
+          ],
+          "docs": "",
+          "complexTypes": [],
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "enums": [],
+  "typeAliases": [],
+  "pluginConfigs": []
+}

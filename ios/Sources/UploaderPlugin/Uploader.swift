@@ -53,6 +53,8 @@ import MobileCoreServices
         tasks[id] = task
         retries[id] = maxRetries
         task.resume()
+      
+        showNotification(title: "HomeFit - Lab", body: "Caricamento video in corso")
 
         return id
     }
@@ -105,8 +107,10 @@ import MobileCoreServices
 
             payload["error"] = error.localizedDescription
             sendEvent(name: "failed", id: id, payload: payload)
+            showNotification(title: "HomeFit - Lab", body: "Caricamento video fallito")
         } else {
             sendEvent(name: "completed", id: id, payload: payload)
+            showNotification(title: "HomeFit - Lab", body: "Caricamento video completato")
         }
 
         tasks.removeValue(forKey: id)
@@ -152,6 +156,19 @@ import MobileCoreServices
         return data as Data
     }
 
+}
+
+func showNotification(title: String, body: String) {
+    let content = UNMutableNotificationContent()
+    content.title = title
+    content.body = body
+    content.sound = .default
+    
+    let request = UNNotificationRequest(identifier: UUID().uuidString,
+                                        content: content,
+                                        trigger: nil)
+    
+    UNUserNotificationCenter.current().add(request, withCompletionHandler: nil)
 }
 
 extension Uploader: URLSessionDataDelegate {

@@ -17,7 +17,7 @@ export interface uploadOption {
    * @description The title of the notification
    * Android only
    */
-  notificationTitle?: number;
+  notificationTitle?: string;
   /**
    * @since 0.0.1
    * @description The headers to send with the request

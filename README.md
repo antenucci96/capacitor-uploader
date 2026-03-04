@@ -246,7 +246,7 @@ addListener(eventName: "events", listenerFunc: (state: UploadEvent) => void) => 
 | ----------------------- | --------------------------------------- | ------------------------ | ----- |
 | **`filePath`**          | <code>string</code>                     |                          | 0.0.1 |
 | **`serverUrl`**         | <code>string</code>                     |                          | 0.0.1 |
-| **`notificationTitle`** | <code>number</code>                     | <code>'Uploading'</code> | 0.0.1 |
+| **`notificationTitle`** | <code>string</code>                     | <code>'Uploading'</code> | 0.0.1 |
 | **`headers`**           | <code>{ [key: string]: string; }</code> |                          | 0.0.1 |
 | **`method`**            | <code>'PUT' \| 'POST'</code>            | <code>'POST'</code>      | 0.0.1 |
 | **`mimeType`**          | <code>string</code>                     |                          | 0.0.1 |

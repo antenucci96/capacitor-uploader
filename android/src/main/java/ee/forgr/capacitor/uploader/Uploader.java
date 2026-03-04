@@ -1,9 +1,12 @@
 package ee.forgr.capacitor.uploader;
 
 import android.app.Application;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.provider.OpenableColumns;
 import java.util.Map;
 import net.gotev.uploadservice.UploadServiceConfig;
@@ -12,6 +15,9 @@ import net.gotev.uploadservice.data.UploadNotificationStatusConfig;
 import net.gotev.uploadservice.protocols.binary.BinaryUploadRequest;
 
 public class Uploader {
+
+  private static final String CHANNEL_PROGRESS_ID = "ee.forgr.capacitor.uploader.notification_channel_progress";
+  private static final String CHANNEL_COMPLETE_ID = "ee.forgr.capacitor.uploader.notification_channel_complete";
 
   private final Context context;
 
@@ -23,13 +29,39 @@ public class Uploader {
   private void initializeUploadService(Context context) {
     Application application = getApplication(context);
     if (application != null) {
+      createNotificationChannels(context);
       UploadServiceConfig.initialize(
         application,
-        "ee.forgr.capacitor.uploader.notification_channel_id",
+        CHANNEL_PROGRESS_ID,
         true
       );
     } else {
       throw new IllegalStateException("Unable to get Application instance");
+    }
+  }
+
+  private void createNotificationChannels(Context context) {
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+      // Canale progresso: nessuna vibrazione
+      NotificationChannel progressChannel = new NotificationChannel(
+        CHANNEL_PROGRESS_ID,
+        "Upload in corso",
+        NotificationManager.IMPORTANCE_LOW
+      );
+      progressChannel.setVibrationPattern(null);
+      progressChannel.enableVibration(false);
+      nm.createNotificationChannel(progressChannel);
+
+      // Canale completamento: vibrazione abilitata
+      NotificationChannel completeChannel = new NotificationChannel(
+        CHANNEL_COMPLETE_ID,
+        "Upload completato",
+        NotificationManager.IMPORTANCE_DEFAULT
+      );
+      completeChannel.enableVibration(true);
+      nm.createNotificationChannel(completeChannel);
     }
   }
 
@@ -99,15 +131,17 @@ public class Uploader {
     UploadNotificationStatusConfig progress =
       new UploadNotificationStatusConfig(
         notificationTitle,
-        notificationTitle + " - In Progress"
+        "Caricamento video in corso"
       );
+
+    // success, error e cancelled usano il canale con vibrazione
     UploadNotificationStatusConfig success = new UploadNotificationStatusConfig(
       notificationTitle,
-      notificationTitle + " - Completed"
+      "Caricamento video completato"
     );
     UploadNotificationStatusConfig error = new UploadNotificationStatusConfig(
       notificationTitle,
-      notificationTitle + " - Error"
+      "Caricamento video fallito"
     );
     UploadNotificationStatusConfig cancelled =
       new UploadNotificationStatusConfig(
@@ -116,7 +150,7 @@ public class Uploader {
       );
 
     return new UploadNotificationConfig(
-      "ee.forgr.capacitor.uploader.notification_channel_id",
+      CHANNEL_PROGRESS_ID,   // canale base (progresso, senza vibrazione)
       false,
       progress,
       success,
